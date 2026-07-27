@@ -1,0 +1,27 @@
+const express = require("express");
+const router = express.Router();
+const {
+  breedController, diseaseController, supplierController, medicineController,
+} = require("../controllers/masterDataController");
+const { protect } = require("../middlewares/auth");
+
+router.use(protect);
+
+// Breeds
+router.route("/breeds").get(breedController.getAll).post(breedController.create);
+router.route("/breeds/:id").get(breedController.getById).put(breedController.update).delete(breedController.remove);
+
+// Diseases
+router.route("/diseases").get(diseaseController.getAll).post(diseaseController.create);
+router.route("/diseases/:id").get(diseaseController.getById).put(diseaseController.update).delete(diseaseController.remove);
+
+// Suppliers
+router.route("/suppliers").get(supplierController.getAll).post(supplierController.create);
+router.route("/suppliers/:id").get(supplierController.getById).put(supplierController.update).delete(supplierController.remove);
+
+// Medicines
+router.route("/medicines").get(medicineController.getAll).post(medicineController.create);
+router.route("/medicines/:id").get(medicineController.getById).put(medicineController.update).delete(medicineController.remove);
+router.post("/medicines/:id/dispense", medicineController.dispense);
+
+module.exports = router;
